@@ -103,7 +103,7 @@
 
 
                                             <button class="button primary large" style="padding: 0px;margin: 0px;border-radius: 15px;" type="button">
-                                            <img class="card-img-top" style="width: 50%;height: 40%;margin-left: 0%" src="\images\<%= test_series[i].domain %>.png" alt="Card image cap">
+                                            <img class="card-img-top" style="width: 50%;height: 40%;margin-left: 0%;border-radius: 20px;" src="\images\<%= test_series[i].domain %>.png" alt="Card image cap">
                                             <div class="card-body" style="padding: 0px;margin: 0px;">
                                                 <h6 style="margin: 10px;">
                                                     <% var tname=test_series[i].tsname.toUpperCase(); %>
@@ -113,7 +113,7 @@
                                                     <%= test_series[i].total_test  %> Test
                                                     <br> <%= test_series[i].rating %>  Ratings
                                                     <br>
-                                                    <a  href="/comments/<%= test_series[i].tsname %>/<%= test_series[i].domain %>">Reviews</a>
+                                                    <a  href="/comments/<%= test_series[i].tsname %>/<%= test_series[i].domain %>" style="color: #719c51;">Reviews</a>
                                                     
                                                     <br> By:
                                                     <% var x= test_series[i].teacher; %>

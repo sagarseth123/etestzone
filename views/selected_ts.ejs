@@ -1,50 +1,95 @@
 <%- include('partials/header') %>
-<title>Test Series</title>
-</head>
-<body>
+    <title>Test Series</title>
+    </head>
 
-    <div class="form-popup" id="myForm">
+    <body>
 
-        <form id="review" action="/reviews" style="padding: 20px;" class="form-container" method="POST">
-            <img onclick="closeForm()" src="/images/cross.png" alt="cross" style="width: 20px;top: 20px;float: right;">
-            <h1>Reviews</h1>
+        <div class="form-popup" id="myForm">
 
-            <input type="hidden" name="domain" value="<%= found.domain %>">
-            <input type="hidden" name="tsname" value="<%= found.tsname %>">
-            <input type="hidden" name="ts_id" value="<%= found._id %>">
-            <label for="rate"><b>Ratings</b></label><br>
-            <input type="number" placeholder="1 - 5" name="rate" step="0.01" max="5" min="1" required><br>
+            <form id="review" action="/reviews" style="padding: 20px;" class="form-container" method="POST">
+                <img onclick="closeForm()" src="/images/cross.jpg" alt="cross" style="width: 20px;top: 20px;float: right;">
+                <h1>Reviews</h1>
 
-            <label for="reviews"><b>Reviews</b></label><br>
-            <textarea form="review" name="reviews" cols="25%" rows="3" required></textarea>
+                <input type="hidden" name="domain" value="<%= found.domain %>">
+                <input type="hidden" name="tsname" value="<%= found.tsname %>">
+                <input type="hidden" name="ts_id" value="<%= found._id %>">
+                <label for="rate"><b>Ratings</b></label><br>
+                <input type="number" placeholder="1 - 5" name="rate" step="0.01" max="5" min="1" required><br>
 
-            <button style="margin: 20px;margin-left: 60%;" type="submit" class="button primary large">submit</button>
-        </form>
-    </div>
+                <label for="reviews"><b>Reviews</b></label><br>
+                <textarea form="review" name="reviews" cols="25%" rows="3" required></textarea>
 
-
-    <button class="button primary large open-button" onclick="openForm()">Give Reviews</button>
-
-    <script>
-        function openForm() {
-            document.getElementById("myForm").style.display = "block";
-        }
-
-        function closeForm() {
-            document.getElementById("myForm").style.display = "none";
-        }
-    </script>
+                <button style="margin: 20px;margin-left: 60%;" type="submit" class="button primary large">submit</button>
+            </form>
+        </div>
 
 
+        <button class="button primary large open-button" onclick="openForm()">Give Reviews</button>
 
-    <div id='content-desktop' onload="popUp()">
-        <%- include('partials/bdheader') %>
-            <%- include('partials/fix_sidebar') %>
+        <script>
+            function openForm() {
+                document.getElementById("myForm").style.display = "block";
+            }
 
-                <div class="container" style="padding-top: 9rem;padding-bottom: 500px;">
+            function closeForm() {
+                document.getElementById("myForm").style.display = "none";
+            }
+        </script>
 
 
 
+        <div id='content-desktop' onload="popUp()">
+            <%- include('partials/bdheader') %>
+                <%- include('partials/fix_sidebar') %>
+
+                    <div class="container" style="padding-top: 9rem;padding-bottom: 500px;">
+
+
+
+
+                        <% tests.forEach(test=>{ %>
+
+                            <form action="/selected_test" method="POST" target="_blank">
+                                <input type="hidden" name="domain" value="<%= found.domain %>">
+                                <input type="hidden" name="test_series" value="<%= found.tsname %>">
+                                <input type="hidden" name="test" value="<%= test.tname %>">
+                                <input type="hidden" name="key" value="<%= test._id %>">
+                                <input type="hidden" name="ts_id" value="<%= found._id %>">
+
+                                <div class="card show_testcard">
+                                    <div class="card-body show_testcard" style="padding-bottom: 0px;padding-top: 0px;">
+                                        <div style="height: 100%;" class="row">
+                                            <div class="col-6" style="text-align: left;">
+                                                <h5 style="padding: 0px;">
+                                                    <%= test.tname %>
+                                                </h5>
+                                                <p style="font-weight: lighter;font-style: italic;color: white">
+                                                    <%= found.tmarks  %> marks ,
+                                                        <%= found.qno %> questions ,
+                                                            <%= found.time  %> minutes </p>
+                                            </div>
+                                            <div class="col-6" style="text-align: right;">
+                                                <button style="margin-top: 15px;" type="submit" class="button primary large">Attempt Now</button>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </form>
+
+                            <% }); %>
+                    </div>
+        </div>
+        </div>
+
+
+
+        <div id='content-mobile' style="padding-bottom: 300px;">
+            <%- include('partials/side_navbar') %>
+
+                <div class="container" style="margin-top: 6rem;">
 
                     <% tests.forEach(test=>{ %>
 
@@ -55,20 +100,22 @@
                             <input type="hidden" name="key" value="<%= test._id %>">
                             <input type="hidden" name="ts_id" value="<%= found._id %>">
 
+
+
                             <div class="card show_testcard">
                                 <div class="card-body show_testcard" style="padding-bottom: 0px;padding-top: 0px;">
-                                    <div style="height: 100%;" class="row">
-                                        <div class="col-6" style="text-align: left;">
+                                    <div class="row">
+                                        <div class="col-8" style="text-align: left;">
                                             <h5 style="padding: 0px;">
                                                 <%= test.tname %>
                                             </h5>
-                                            <p style="font-weight: lighter;font-style: italic;color: white">
+                                            <p style="font-weight: lighter;font-style: italic;color: gray;font-size: 10px;">
                                                 <%= found.tmarks  %> marks ,
                                                     <%= found.qno %> questions ,
                                                         <%= found.time  %> minutes </p>
                                         </div>
-                                        <div class="col-6" style="text-align: right;">
-                                            <button style="margin-top: 15px;" type="submit" class="button primary large">Attempt Now</button>
+                                        <div class="col-4" style="text-align: right;">
+                                            <button style="margin-top: 15px;" type="submit" class="btn-sm btn-dark">Attempt</button>
                                         </div>
                                     </div>
 
@@ -80,52 +127,6 @@
 
                         <% }); %>
                 </div>
-    </div>
-    </div>
 
 
-
-    <div id='content-mobile' style="padding-bottom: 300px;">
-        <%- include('partials/side_navbar') %>
-
-            <div class="container" style="margin-top: 6rem;">
-
-                <% tests.forEach(test=>{ %>
-
-                    <form action="/selected_test" method="POST" target="_blank">
-                        <input type="hidden" name="domain" value="<%= found.domain %>">
-                        <input type="hidden" name="test_series" value="<%= found.tsname %>">
-                        <input type="hidden" name="test" value="<%= test.tname %>">
-                        <input type="hidden" name="key" value="<%= test._id %>">
-                        <input type="hidden" name="ts_id" value="<%= found._id %>">
-
-
-
-                        <div class="card show_testcard">
-                            <div class="card-body show_testcard" style="padding-bottom: 0px;padding-top: 0px;">
-                                <div class="row">
-                                    <div class="col-8" style="text-align: left;">
-                                        <h5 style="padding: 0px;">
-                                            <%= test.tname %>
-                                        </h5>
-                                        <p style="font-weight: lighter;font-style: italic;color: gray;font-size: 10px;">
-                                            <%= found.tmarks  %> marks ,
-                                                <%= found.qno %> questions ,
-                                                    <%= found.time  %> minutes </p>
-                                    </div>
-                                    <div class="col-4" style="text-align: right;">
-                                        <button style="margin-top: 15px;" type="submit" class="btn-sm btn-dark">Attempt</button>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                    </form>
-
-                    <% }); %>
-            </div>
-
-
-    </div>
+        </div>
