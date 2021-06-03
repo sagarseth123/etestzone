@@ -1325,6 +1325,22 @@ app.get("/comments/:tsname/:domain", function(req, res) {
     });
 });
 
+
+app.get("/delete_comment/:review_id/:user/:domain/:tsname", function(req, res) {
+    Review.findOne({ _id: req.params.review_id }, function(err, found) {
+        if (found) {
+            var comment = found.comments;
+            for (var i = 0; i < comment.length; i++) {
+                if (comment[i].user == req.params.user) {
+                    comment.splice(i, 1);
+                }
+            }
+        }
+        found.save();
+    });
+    res.redirect('/comments/' + req.params.tsname + "/" + req.params.domain);
+})
+
 // app.post("/test_series", function(req, res) {
 //     var ts_id = req.body.ts_id;
 
@@ -1593,9 +1609,9 @@ app.post("/reviews", function(req, res) {
         });
 
 
-        var USER = req.params.user;
-        if (req.body.reviews.length > 0) {
-            found.comments.push({ "user": USER, "comment": req.body.reviews });
+        // var USER = req.params.user;
+        if (req.body.reviews.length > 0 && req.user.username != null) {
+            found.comments.push({ "user": req.user.username, "comment": req.body.reviews });
         }
         found.total++;
         found.save();

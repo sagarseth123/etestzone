@@ -1,56 +1,57 @@
 <%- include('partials/header') %>
-<title>Result</title>
-</head>
-<body>
+    <title>Result</title>
+    </head>
 
-    
-    <div class="card">
-        <div class="card-header">
-            <h2 style="font-weight: 300;">Test ID:
-                <%= test_name %>
-            </h2>
-            <h3 style="font-weight: 300;">Total marks:
-                <% var x=no*pmark; %>
-                    <%= x  %>
-            </h3>
-            <h4 style="font-weight: 300;">Date:
-                <%= date  %>
-            </h4>
-        </div>
-
-        <div class="card-body">
-            <% students.forEach(student=>{ %>
-                <% var right = 0; %>
-                    <% var wrong =0; %>
-                        <% var empty=0; %>
-                            <div class="row">
-                                <div class="col-4">
-                                    <h6>
-                                        <%= student.name  %>
-                                    </h6>
-                                </div>
-                                <div class="col-8">
-                                    <% student.result.forEach(question =>{ %>
+    <body>
 
 
-                                        <% if(question.value==null){ %>
-                                            <% empty++; %>
-                                                <% }else{ %>
-                                                    <% if(question.value==question.ans){ %>
-                                                        <% right++; %>
-                                                            <% }else{ %>
-                                                                <% wrong++; %>
-                                                                    <% } %>
+        <div class="card">
+            <div class="card-header">
+                <h2 style="font-weight: 300;">Test ID:
+                    <%= test_name %>
+                </h2>
+                <h3 style="font-weight: 300;">Total marks:
+                    <% var x=no*pmark; %>
+                        <%= x  %>
+                </h3>
+                <h4 style="font-weight: 300;">Date:
+                    <%= date  %>
+                </h4>
+            </div>
+
+            <div class="card-body">
+                <% students.forEach(student=>{ %>
+                    <% var right = 0; %>
+                        <% var wrong =0; %>
+                            <% var empty=0; %>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <h6>
+                                            <%= student.name  %>
+                                        </h6>
+                                    </div>
+                                    <div class="col-8">
+                                        <% student.result.forEach(question =>{ %>
+
+
+                                            <% if(question.value==null){ %>
+                                                <% empty++; %>
+                                                    <% }else{ %>
+                                                        <% if(question.value==question.ans){ %>
+                                                            <% right++; %>
+                                                                <% }else{ %>
+                                                                    <% wrong++; %>
                                                                         <% } %>
-                                                                            <% }) %>
-                                                                                <% var total=((pmark*right)-(nmark*wrong)); %>
-                                                                                    <%= total  %>
+                                                                            <% } %>
+                                                                                <% }) %>
+                                                                                    <% var total=((pmark*right)-(nmark*wrong)); %>
+                                                                                        <%= total  %>
 
 
+                                    </div>
                                 </div>
-                            </div>
-                            <hr>
-                            <% }) %>
+                                <hr>
+                                <% }) %>
 
+            </div>
         </div>
-    </div>
