@@ -1331,7 +1331,7 @@ app.get("/delete_comment/:review_id/:user/:domain/:tsname", function(req, res) {
         if (found) {
             var comment = found.comments;
             for (var i = 0; i < comment.length; i++) {
-                if (comment[i].user == req.params.user) {
+                if (comment[i].user == req.user.username) {
                     comment.splice(i, 1);
                 }
             }
