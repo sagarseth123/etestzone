@@ -250,7 +250,7 @@ sendConfirmationEmail = (email, confirmationCode) => {
           
           Good luck, Practice well and stay determined!</p>
           </div>`,
-    }).catch(err => res.send(err));
+    }).catch(err => console.log(err));
 };
 
 verifyUser = (req, res, next) => {
@@ -1325,25 +1325,30 @@ app.post("/std_signin", function(req, res) {
     }
     //console.log(user);
     User.findOne({ username: req.body.username }, function(err, found) {
-        if (found.status != "Active") {
-            g = 4;
-            res.redirect("/login");
+        if (!found) {
+            g = 1;
+            res.redirect('/login');
         } else {
-            req.login(user, function(err) {
-                if (err) {
-                    g = 3;
-                    res.redirect("/login");
-                    //return next(err);
-                } else {
-                    passport.authenticate("local")(req, res, function(err) {
-                        if (err) {
-                            g = 3;
-                            res.redirect("/login");
-                        }
-                        res.redirect("/std_page");
-                    });
-                }
-            });
+            if (found.status != "Active") {
+                g = 4;
+                res.redirect("/login");
+            } else {
+                req.login(user, function(err) {
+                    if (err) {
+                        g = 3;
+                        res.redirect("/login");
+                        //return next(err);
+                    } else {
+                        passport.authenticate("local")(req, res, function(err) {
+                            if (err) {
+                                g = 3;
+                                res.redirect("/login");
+                            }
+                            res.redirect("/std_page");
+                        });
+                    }
+                });
+            }
         }
     })
 });

@@ -111,7 +111,9 @@
 
 
     <script>
-        if (<%= g %> == 3) {
+        if (<%= g %> == 1) {
+            alert("Invalid username");
+        } else if (<%= g %> == 3) {
             alert("Please enter valid username and password for Login");
         } else if (<%= g %> == 4) {
             alert("An activation link has been sent to your gmail account,please verify your account");
