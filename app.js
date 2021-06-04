@@ -29,13 +29,7 @@ const findOrCreate = require("mongoose-findorcreate");
 const passportLocalMongoose = require("passport-local-mongoose");
 const { parse } = require('path');
 const nodemailer = require('nodemailer');
-var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'subashraj89304@gmail.com',
-        pass: 'sagarseth'
-    }
-});
+var jwt = require("jsonwebtoken");
 
 
 
@@ -98,14 +92,17 @@ mongoose.connect(process.env.DB, {
 
 
 var userSchema = new mongoose.Schema({
-
-    local: {
-        username: String,
-        password: String
+    username: String,
+    password: String,
+    status: {
+        type: String,
+        enum: ['Pending', 'Active'],
+        default: 'Pending'
     },
-    name: String,
-    googleId: String
-
+    confirmationCode: {
+        type: String,
+        unique: true
+    },
 });
 
 
@@ -220,6 +217,131 @@ passport.deserializeUser(function(id, done) {
 
 
 
+/////////////.............    email verification start......   ///////////////
+
+
+const transport = nodemailer.createTransport({
+    service: "Gmail",
+    auth: {
+        user: process.env.MY_EMAIL,
+        pass: process.env.EMAIL_PASSWORD
+    },
+});
+
+
+sendConfirmationEmail = (email, confirmationCode) => {
+    //console.log(req.header('host'));
+    transport.sendMail({
+        from: process.env.MY_EMAIL,
+        to: email,
+        subject: "Please confirm your account",
+        html: `
+        <div style="display:flex">
+            <img src="https://drive.google.com/thumbnail?id=1-ctUVlfw5nI2eH7MEKutfp46AhK8rUp-"><h1>Etestzone</h1>
+        </div>
+        
+          <h3>Etestzone... Stay Determined!!!</h3>
+          <div>
+          <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
+          <a style="text-decoration:none;color:#ffffff;display:inline-block;border-top:12px solid #339e72;border-right:40px solid #339e72;border-bottom:12px solid #339e72;border-left:40px solid #339e72;font-size:16px;font-weight:600;font-family:'Open Sans','Trebuchet MS',sans-serif;color:#ffffff;background-color:#339e72" href=https://etestzone.in/confirm/${confirmationCode}>Confirm Account</a>
+          <p>After verifying your email address, you are able to acess full feature of our application.
+
+          We are very happy to receive your feedback!
+          
+          Good luck, Practice well and stay determined!</p>
+          </div>`,
+    }).catch(err => res.send(err));
+};
+
+verifyUser = (req, res, next) => {
+    User.findOne({
+            confirmationCode: req.params.confirmationCode,
+        })
+        .then((user) => {
+            if (!user) {
+                return res.status(404).send({ message: "User Not found." });
+            }
+
+            user.status = "Active";
+            user.save((err) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+            });
+            res.redirect('/login');
+        })
+        .catch((e) => console.log("error", e));
+};
+
+app.get('/confirm/:confirmationCode', verifyUser);
+
+
+
+app.get("/forgot_password/:valid", function(req, res) {
+    res.render('forget', { shift: 1, valid: req.params.valid, user: "none" });
+});
+
+
+
+app.post('/request_reset_password', function(req, res) {
+    User.findOne({ username: req.body.username }, function(err, found) {
+        if (!found) {
+            res.redirect('/forget_password/1');
+        } else {
+            transport.sendMail({
+                from: process.env.MY_EMAIL,
+                to: req.body.username,
+                subject: "Reset Your Password",
+                html: `
+                <div style="background-image=url(https://drive.google.com/thumbnail?id=17OzTFKHECvwabNAPE_tNANEjksC_vAV_);color="white">
+                <div style="display:flex">
+                    <img src="https://drive.google.com/thumbnail?id=1-ctUVlfw5nI2eH7MEKutfp46AhK8rUp-"><h1>Etestzone</h1>
+                </div>
+                
+                  <h3>Etestzone... Stay Determined!!!</h3>
+                  <div>
+                  <p>You're receiving this e-mail because you or someone else has requested a password for your user account at .
+                  It can be safely ignored if you did not request a password reset. Click the button below to reset your password.</p>
+                  <a style="text-decoration:none;color:#ffffff;display:inline-block;border-top:12px solid #339e72;border-right:40px solid #339e72;border-bottom:12px solid #339e72;border-left:40px solid #339e72;font-size:16px;font-weight:600;font-family:'Open Sans','Trebuchet MS',sans-serif;color:#ffffff;background-color:#339e72" href=https://etestzone.in/reset_password/${req.body.username}>Reset Password</a>
+                  <p> The Team <br>
+                    https://etestzone.in <br>
+                    Good luck, Practice well and stay determined!
+                </p>
+                  </div>
+                  </div>`,
+            }).catch(err => res.send(err));
+        }
+    });
+    console.log("mail sent");
+    res.redirect('/login');
+});
+
+app.get('/reset_password/:user', function(req, res) {
+    res.render('forget', { shift: 2, valid: 0, user: req.params.user });
+});
+
+
+app.post('/reset_myAccount_password', function(req, res) {
+    User.findOne({ username: req.body.username }, function(err, user) {
+        //console.log(user);
+        user.setPassword(req.body.password, function(err, user) {
+            if (err) {
+                console.log(err);
+            } else {
+                //console.log("password changed");
+                user.save();
+            }
+        });
+        res.redirect('/login');
+    });
+})
+
+
+////////............    email verification end  .......//////////////////////
+
+
+
 var g = 0;
 app.get("/", function(req, res) {
     res.render("index", { g: g });
@@ -233,10 +355,12 @@ app.get('/index', function(req, res) {
 
 app.get('/login', function(req, res) {
     res.render("login", { g: g });
+    g = 0;
 });
 
 app.get('/signup', function(req, res) {
     res.render('signup', { g: g });
+    g = 0;
 });
 
 app.get('/contact', function(req, res) {
@@ -1161,8 +1285,9 @@ app.get('/cbse', function(req, res) {
 
 
 app.post("/std_signup", function(req, res) {
+    const token = jwt.sign({ email: req.body.username }, process.env.SECRET);
 
-    User.register({ username: req.body.username, active: false }, req.body.password, function(err, user) {
+    User.register({ username: req.body.username, confirmationCode: token }, req.body.password, function(err, user) {
 
         if (err) {
             console.log(err);
@@ -1174,64 +1299,18 @@ app.post("/std_signup", function(req, res) {
 
             res.redirect("/signup");
         } else {
-            passport.authenticate("local")(req, res, function() {
-                Uname = req.user.username;
-                USER = Uname.substr(0, Uname.length - 10);
-                //console.log(USER);
-                res.redirect("/std_page");
-            });
+            sendConfirmationEmail(
+                req.body.username,
+                token
+            );
+            g = 4;
+            res.redirect('/login');
         }
     });
 });
 
 
-app.get("/std_signup/:object", function(req, res, next) {
 
-    var user_info = JSON.parse(req.params.object);
-    User.register({ username: user_info.username, active: false }, user_info.password, function(err, user) {
-
-        if (err) {
-            console.log(err);
-            if (user_info.username && user_info.password) {
-                g = 1;
-            } else {
-                g = 2;
-            }
-
-            res.redirect("/");
-        } else {
-            next();
-        }
-    });
-}, passport.authenticate('local', {
-    successRedirect: '/std_page',
-    failureRedirect: '/'
-}));
-
-//app.get('/std_login/:username/:password', (req, res) => passport.authenticate('local', { successRedirect: '/std_page', failureRedirect: '/', })(req, res));
-
-
-app.get("/std_login", function(req, res) {
-
-    const user = new User({
-        username: req.query.uname,
-        password: req.query.pw
-    });
-    // if (!(user_info.username && user_info.password)) {
-    //     g = 3;
-    //     res.redirect("/");
-    // }
-    //app.use(req.session);
-    req.login(user, function(err) {
-        if (err) {
-            return next(err);
-        } else {
-            passport.authenticate("local")(req, res, function() {
-                res.redirect("/std_page");
-            });
-        }
-    });
-});
 
 
 app.post("/std_signin", function(req, res) {
@@ -1245,21 +1324,28 @@ app.post("/std_signin", function(req, res) {
         res.redirect("/login");
     }
     //console.log(user);
-    req.login(user, function(err) {
-        if (err) {
-            g = 3;
+    User.findOne({ username: req.body.username }, function(err, found) {
+        if (found.status != "Active") {
+            g = 4;
             res.redirect("/login");
-            //return next(err);
         } else {
-            passport.authenticate("local")(req, res, function(err) {
+            req.login(user, function(err) {
                 if (err) {
                     g = 3;
                     res.redirect("/login");
+                    //return next(err);
+                } else {
+                    passport.authenticate("local")(req, res, function(err) {
+                        if (err) {
+                            g = 3;
+                            res.redirect("/login");
+                        }
+                        res.redirect("/std_page");
+                    });
                 }
-                res.redirect("/std_page");
             });
         }
-    });
+    })
 });
 
 
@@ -1807,30 +1893,7 @@ app.get('/teacher', function(req, res) {
 });
 
 
-app.get("/forgot_password", function(req, res) {
-    res.render("forget");
-});
 
-app.post("/forget", function(req, res) {
-
-    //console.log(req.body.username);
-
-    var mailOptions = {
-        from: 'subashraj89304@gmail.com',
-        to: req.body.username,
-        subject: 'Etestzone',
-        text: 'Someone is trying to change your etestzone account password if you tried to change password then click on this link  http://testzone.herokuapp.com/change_pass if you didn,t tried it,ignore this message your password will remail same '
-    };
-    transporter.sendMail(mailOptions, function(error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-    res.redirect("/");
-
-});
 
 app.get("/change_pass", function(req, res) {
     res.render("change_pass");

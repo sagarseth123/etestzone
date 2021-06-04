@@ -1,48 +1,249 @@
-<%- include('partials/header') %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
+    <meta name="description" content="Etestzone: Reset your password">
+    <title>Reset Password</title>
+    <link rel="canonical" href="https://etestzone.in/" />
+    <link rel="icon" href="/favicon/favicon1.ico">
+    <link rel="apple-touch-icon" href="images/logo.png">
+    <!-- Loading third party fonts -->
+
+    <link href="fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Loading main css file -->
+    <link rel="stylesheet" href="/css/bstyle.css">
+
+    <!--[if lt IE 9]>
+		<script src="js/ie-support/html5.js"></script>
+		<script src="js/ie-support/respond.js"></script>
+		<![endif]-->
+
+
+
 </head>
+
+<!-- green mystery is present is class site header -->
+
 <body>
 
-    <img style="position: absolute;z-index: 1;text-align: center;" class="simple" src="https://images.unsplash.com/photo-1484807352052-23338990c6c6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="img" width="100%" height="400px">
+    <div id="site-content">
+        <header class="site-header">
+            <div class="primary-header">
+                <div class="container">
+                    <a href="/index" id="branding">
+                        <img src="/images/logo.png" alt="etestzone">
+                        <h1 class="">Etestzone</h1>
+                    </a>
+                    <!-- #branding -->
 
+                    <div class="main-navigation">
+                        <button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
+                        <ul class="menu">
+                            <li class="menu-item current-menu-item"><a href="/">Home</a></li>
+                            <li class="menu-item"><a onclick="lshow_test_series();" href="#">Test Series</a>
+                                <div class="dropdown" id="lshow_test_series">
+                                    <ul class="menu ">
+                                        <li style="margin: 10px;width: 100%;"><a href="/domain/jee">JEE</a></li>
+                                        <li style="margin: 10px;width: 100%;"><a href="/domain/nda">NDA</a></li>
+                                        <li style="margin: 10px;width: 100%;"><a href="/domain/neet">NEET</a></li>
+                                        <li style="margin: 10px;width: 100%;"><a href="/std_page">more</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="menu-item"><a href="student.html">CBSE</a></li>
+                            <li class="menu-item"><a href="/contact">Contact</a></li>
+                            <li class="menu-item"><a onclick="luser();" href="#">login/sign up</a>
+                                <div id="lauth" class="dropdown">
+                                    <ul class="menu ">
+                                        <li style="margin: 10px;width: 100%;"><a href="/login">Login</a></li>
+                                        <li style="margin: 10px;width: 100%;"><a href="/signup">SignUp</a></li>
+                                    </ul>
+                                </div>
+                            </li>
 
+                        </ul>
+                        <!-- .menu -->
+                    </div>
+                    <!-- .main-navigation -->
 
-    <div class="card login">
-
-        <div class="card-body login " style="text-align: left; ">
-            <!-- Makes POST request to /login route -->
-            <form style="margin-top: 30%;" method="POST" action="/forget">
-                <div class="form-group ">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" name="username">
+                    <div class="mobile-navigation"></div>
                 </div>
-                <button type="submit" onclick='forget();' class="btn btn-dark ">Send mail</button>
+                <!-- .container -->
+            </div>
+            <!-- .primary-header -->
 
-            </form>
+
+            <!-- .............shift two............. -->
+
+            <div id="shift2" style="display: none; text-align: center;padding-left: 0px;padding-right: 0px;" class="page-title">
+                <div class="container row">
+
+
+                    <div class="col-md-7">
+                        <h2>Reset Password</h2>
+
+                        <form id="reset_password" style="text-align: left;" action="/reset_myAccount_password" method="POST" class="contact-form">
+                            <input type="hidden" name="username" value="<%= user %>">
+                            <p>
+                                <label class="details" for="email">New Password</label>
+                                <span class="control"><input type="password" name="password1" class="button primary large" id="password1" placeholder="New Password" required></span>
+                            </p>
+                            <p>
+                                <label class="details" for="name">Confirm Password</label>
+                                <span class="control"><input type="password" name="password" class="button primary large" id="password" placeholder="Re Write Password" required></span>
+                            </p>
+                            <p class="text-right">
+
+                                <span style="margin-right: 5%;"><a class="details" href="/signup">Sign Up</a></span>
+                                <span style="margin-right: 5%;"><a class="details" href="/login">login</a></span>
+                                <button onclick="check();" class="button primary large" type="button">Reset</button>
+                            </p>
+                        </form>
+                    </div>
+                    <div class="col-md-5">
+                        <img src="/images/kid.png" style="width: 60%;" alt="kid">
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- .............shift one............. -->
+            <div id="shift1" style="display: none; text-align: center;padding-left: 0px;padding-right: 0px;" class="page-title">
+                <div class="container row">
+
+
+                    <div class="col-md-7">
+                        <h2>Reset Password</h2>
+
+                        <form style="text-align: left;" action="/request_reset_password" method="POST" class="contact-form">
+                            <p>
+                                <label class="details" for="email">Email</label>
+                                <span class="control"><input type="email" name="username" class="button primary large" id="name" placeholder="Email address" required></span>
+                            </p>
+                            <p class="text-right">
+                                <span style="margin-right: 5%;"><a class="details" href="/signup">Sign Up</a></span>
+                                <span style="margin-right: 5%;"><a class="details" href="/login">Login</a></span>
+                                <button type="submit" onclick="forget();" class="button primary large">Send Mail</button>
+                            </p>
+                        </form>
+                    </div>
+                    <div class="col-md-5">
+                        <img src="/images/kid.png" style="width: 60%;" alt="kid">
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+
+
+    <script>
+        if (<%= shift %> == 2) {
+            document.getElementById('shift2').style.display = 'block';
+            document.getElementById('shift1').style.display = 'none';
+        } else if (<%= shift %> == 1) {
+            document.getElementById('shift1').style.display = 'block';
+            document.getElementById('shift2').style.display = 'none';
+        }
+        if (<%= valid %> == 1) {
+            alert("Incorrect Email,please give correct email address");
+        }
+
+        function forget() {
+            alert("A link has been sent to your gmail account,please reset your password from there");
+        }
+
+        function check() {
+            var pass1 = document.getElementById('password1').value;
+            var pass = document.getElementById('password').value;
+            if (pass1 == pass) {
+                document.getElementById('reset_password').submit();
+            } else {
+                alert("Passwords are not matching");
+            }
+        }
+    </script>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="widget">
+                        <h3 class="widget-title">Contact us</h3>
+                        <address>ETESTZONE <br>Online Mock Tests And TestSeries <br>For JEE,NEET,NDA</address>
+
+                        <a href="gmail:etestzone1974@gmail.com">etestzone1974@gmail.com</a> <br>
+                        <a href="tel:9055304085">(0191) 9055304085</a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="widget">
+                        <h3 class="widget-title">Social media</h3>
+                        <p>Follow Us on Social media for new updates</p>
+                        <div class="social-links circle">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-mail-forward"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="widget">
+                        <h3 class="widget-title">Resources</h3>
+                        <li>
+                            <a href="#">
+                                JEE TESTSERIES
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                NEET TESTSERIES
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                NDA TESTSERIES
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                NCERT SOLUTIONS
+                            </a>
+                        </li>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="widget">
+                        <h3 class="widget-title">Newsletter</h3>
+                        <p>SignUp for our new letter for latest updates</p>
+                        <form action="#" class="subscribe">
+                            <input type="email" placeholder="Email Address...">
+                            <input type="submit" class="light" value="Subscribe">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="copy">Copyright <span id="year"></span> ETESTZONE. All rights reserved.</div>
             <script>
-                function forget() {
-                    alert("link has sent on your email account.change your password from there...");
-                }
+                var year = new Date();
+                year = year.getFullYear();
+                document.getElementById('year').innerHTML = year;
             </script>
         </div>
-    </div>
-    <div class="jumbotron centered" style="padding-right: 0px; padding-left: 0px;margin-bottom: 0px;z-index: 5;margin-top: 390px; ">
-        <div class="container " style="padding-bottom: 60px; ">
-            <h1 class="display-3 ">EtestZone</h1>
-            <p style="font-size: 18px; " class="lead "> Welcome to India's largest online test platform</p>
+
+    </footer>
+
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/app.js"></script>
 
 
+</body>
 
-
-
-        </div>
-    </div>
-
-    <div class="card card-footer row fotter" style="background-color:  #212529;margin-bottom: 0px;color: white;position: relative;">
-        <div class="col-12" style="text-align: center;margin: 0px;padding: 0px;">
-            <a onclick="contact();" style="color: white;margin: 0px;padding: 0px;" href="#contact">contact us</a> <br> <br>
-            <a href="" style="color: white; margin: 0px;padding: 0px;"> <i class="fab fa-facebook-square"></i></a>
-            <a href="https://www.instagram.com/sagarseth_1974?r=nametag" style="color: white; margin: 0px;padding: 0px;"> <i class="fab fa-instagram"></i></a>
-        </div>
-
-    </div>
-    </div>
+</html>

@@ -106,6 +106,7 @@
                                 <span class="control"><input type="password" name="password" class="button primary large" id="email" placeholder="Password" required></span>
                             </p>
                             <p class="text-right">
+                                <span style="margin-right: 5%;"><a class="details" href="/forgot_password/0">forgot Pasword</a></span>
                                 <span style="margin-right: 5%;"><a class="details" href="/signup">Sign Up</a></span>
                                 <button type="submit" class="button primary large">Login</button>
                             </p>
@@ -124,6 +125,10 @@
     <script>
         if (<%= g %> == 3) {
             alert("Please enter valid username and password for Login");
+        } else if (<%= g %> == 4) {
+            alert("An activation link has been sent to your gmail account,please verify your account");
+        } else if (<%= g %> == 5) {
+            alert("Invalid Username");
         }
     </script>
 
