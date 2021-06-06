@@ -119,22 +119,19 @@
                                                     <div class="row" style="margin-left: 1%;margin-right: 1%;">
                                                         <% var naam= 'answer'+i; %>
                                                             <% var check = questions[i].a %>
-                                                                <% if(check.length < 3){ %>
-                                                                    <div class="col-3">
-                                                                        <input style="background-color: black;" type="radio" class="<%= naam %>" name="<%= naam %>" value="a">
-                                                                        <label style="width: 80%;"> <%= questions[i].a %> </label><br>
-                                                                    </div>
-                                                                    <div class="col-3">
-                                                                        <input type="radio" class="<%= naam %>" name="<%= naam %>" value="b">
-                                                                        <label style="width: 80%;"> <%= questions[i].b %>  </label><br>
-                                                                    </div>
-                                                                    <div class="col-3">
-                                                                        <input type="radio" class="<%= naam %>" name="<%= naam %>" value="c">
-                                                                        <label style="width: 80%;"> <%= questions[i].c %> </label><br>
-                                                                    </div>
-                                                                    <div class="col-3">
-                                                                        <input type="radio" class="<%= naam %>" name="<%= naam %>" value="d">
-                                                                        <label style="width: 10%;"> <%= questions[i].d %> </label><br>
+                                                                <% if(check.length < 5){ %>
+                                                                    <div style="display: flex;">
+                                                                        <input style="margin: 7px;" type="radio" class="<%= naam %>" name="<%= naam %>" value="a">
+                                                                        <label> <%= questions[i].a %> </label><br>
+
+                                                                        <input style="margin: 7px;" type="radio" class="<%= naam %>" name="<%= naam %>" value="b">
+                                                                        <label> <%= questions[i].b %>  </label><br>
+
+                                                                        <input style="margin: 7px;" type="radio" class="<%= naam %>" name="<%= naam %>" value="c">
+                                                                        <label> <%= questions[i].c %> </label><br>
+
+                                                                        <input style="margin: 7px;" type="radio" class="<%= naam %>" name="<%= naam %>" value="d">
+                                                                        <label> <%= questions[i].d %> </label><br>
                                                                     </div>
                                                                     <% }else{ %>
 

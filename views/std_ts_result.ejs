@@ -1,282 +1,283 @@
 <%- include('partials/header') %>
-<title>TestSeries Result</title>
-</head>
-<body>
+    <title>TestSeries Result</title>
+    </head>
+
+    <body>
 
 
 
 
-    <div class="card-header nav-header" style="padding: 0px;">
-        <div class="row logo-title" style="background-image: url(/images/header-bg.jpg);padding: 10px;padding-bottom: 0px;">
-            <div class="col-6">
-                <h3 style="font-weight: 300;">Test :
-                    <%= testname %>
-                </h3 style="font-weight: 300;">
-                <h5 style="font-weight: 300;">Marks per question:
-                    <%= pmarks %>
-                </h5>
-                <h5 style="font-weight: 300;">Negative Marking:
-                    <%= nmark  %>
-                </h5>
-                <h5 style="font-weight: 300;">Total marks:
-                    <%= tmark %>
-                </h5>
-                <h5 style="font-weight: 300;">Time:
-                    <%= time %>
-                </h5>
-            </div>
-            <div class="col-6" style="text-align: left; margin-right: 0px;padding-right: 0px;">
-                <h4>Rank :
-                    <%= rank %>
-                </h4>
-                <h6>Percentile :
-                    <%= per %> %
-                </h6>
-                <h6>Marks :
-                    <%= mymarks %>
-                </h6>
-                <h6>Correct :
-                    <span id="pcount">0</span>
-                </h6>
-                <h6>Wrong :
-                    <span id="ncount">0</span>
-                </h6>
-                <h6>Unattempted :
-                    <span id="ucount">0</span>
-                </h6>
-                <div style="text-align: right; margin-right: 20%;">
-                    <form action="/re_attempt" method="POST" onsubmit="return confirm('Do you really want to re attempt the test.the current result will be cleared');">
-                        <input type="hidden" name="domain" value="<%= domain %>">
-                        <input type="hidden" name="test_series" value="<%= tsname %>">
-                        <input type="hidden" name="test" value="<%= testname %>">
-                        <input type="hidden" name="key" value="<%= key %>">
-                        <input type="hidden" name="ts_id" value="<%= _id %>">
-                        <a href="/std_page"> <button type="button" class="btn-sm button primary large" style="margin-right: 5px;">Close Test</button></a>
-                        <button style="margin-top: 15px;" type="submit" class="btn-sm button primary large">Re Attempt</button>
-                    </form>
+        <div class="card-header nav-header" style="padding: 0px;">
+            <div class="row logo-title" style="background-image: url(/images/header-bg.jpg);padding: 10px;padding-bottom: 0px;">
+                <div class="col-6">
+                    <h3 style="font-weight: 300;">Test :
+                        <%= testname %>
+                    </h3 style="font-weight: 300;">
+                    <h5 style="font-weight: 300;">Marks per question:
+                        <%= pmarks %>
+                    </h5>
+                    <h5 style="font-weight: 300;">Negative Marking:
+                        <%= nmark  %>
+                    </h5>
+                    <h5 style="font-weight: 300;">Total marks:
+                        <%= tmark %>
+                    </h5>
+                    <h5 style="font-weight: 300;">Time:
+                        <%= time %>
+                    </h5>
+                </div>
+                <div class="col-6" style="text-align: left; margin-right: 0px;padding-right: 0px;">
+                    <h4>Rank :
+                        <%= rank %>
+                    </h4>
+                    <h6>Percentile :
+                        <%= per %> %
+                    </h6>
+                    <h6>Marks :
+                        <%= mymarks %>
+                    </h6>
+                    <h6>Correct :
+                        <span id="pcount">0</span>
+                    </h6>
+                    <h6>Wrong :
+                        <span id="ncount">0</span>
+                    </h6>
+                    <h6>Unattempted :
+                        <span id="ucount">0</span>
+                    </h6>
+                    <div style="text-align: right; margin-right: 20%;">
+                        <form action="/re_attempt" method="POST" onsubmit="return confirm('Do you really want to re attempt the test.the current result will be cleared');">
+                            <input type="hidden" name="domain" value="<%= domain %>">
+                            <input type="hidden" name="test_series" value="<%= tsname %>">
+                            <input type="hidden" name="test" value="<%= testname %>">
+                            <input type="hidden" name="key" value="<%= key %>">
+                            <input type="hidden" name="ts_id" value="<%= _id %>">
+                            <a href="/std_page"> <button type="button" class="btn-sm button primary large" style="margin-right: 5px;">Close Test</button></a>
+                            <button style="margin-top: 15px;" type="submit" class="btn-sm button primary large">Re Attempt</button>
+                        </form>
+                    </div>
                 </div>
             </div>
+            <img src="/images/wood.png" height="20px" width="100%" style="padding: 0px;margin: 0px;" alt="">
+
         </div>
-        <img src="/images/wood.png" height="20px" width="100%" style="padding: 0px;margin: 0px;" alt="">
-
-    </div>
-    <div class="row">
-        <div class="col-md-8 col-12" style="margin-bottom: 6rem;">
+        <div class="row">
+            <div class="col-md-8 col-12" style="margin-bottom: 6rem;">
 
 
-            <div class="jumbotron" style="border-style: groove;background-color: white;">
-                <form id="myform" action="/std_ts_result" method="POST" onsubmit="return confirm('Do you really want to submit');">
-                    <input type="hidden" name="domain" value="<%= domain %>">
-                    <input type="hidden" name="ts" value="<%= //found.tsname %>">
-                    <input type="hidden" name="tname" value="<%= testname %>">
-                    <input type="hidden" name="qno" value="<%= no %>">
-                    <input type="hidden" name="key" value="<%= key %>">
+                <div class="jumbotron" style="border-style: groove;background-color: white;">
+                    <form id="myform" action="/std_ts_result" method="POST" onsubmit="return confirm('Do you really want to submit');">
+                        <input type="hidden" name="domain" value="<%= domain %>">
+                        <input type="hidden" name="ts" value="<%= //found.tsname %>">
+                        <input type="hidden" name="tname" value="<%= testname %>">
+                        <input type="hidden" name="qno" value="<%= no %>">
+                        <input type="hidden" name="key" value="<%= key %>">
 
-                    <script>
-                        var ncount = 0;
-                        var pcount = 0;
-                        var ucount = <%= no %>;
-                    </script>
+                        <script>
+                            var ncount = 0;
+                            var pcount = 0;
+                            var ucount = <%= no %>;
+                        </script>
 
 
-                    <% for(var i=0;i<no;i++){ %>
-                        <div id="<%= i+1 %>" style="display: none;">
-                            <% var qno=i+1; %>
-                                <% var naam= 'answer'+i; %>
-                                    <h4 class="check" style="color: #fa1400
+                        <% for(var i=0;i<no;i++){ %>
+                            <div id="<%= i+1 %>" style="display: none;">
+                                <% var qno=i+1; %>
+                                    <% var naam= 'answer'+i; %>
+                                        <h4 class="check" style="color: #fa1400
                                 ;"></h4>
-                                    <h6> Q
-                                        <%= qno  %> )
+                                        <h6> Q
+                                            <%= qno  %> )
 
-                                    </h6>
-                                    <div style="margin-left: 30px;">
-                                        <% var thisq = questions[i].question; %>
-                                            <% var myqn =thisq.substr(0,4); %>
+                                        </h6>
+                                        <div style="margin-left: 30px;">
+                                            <% var thisq = questions[i].question; %>
+                                                <% var myqn =thisq.substr(0,4); %>
 
-                                                <% if(myqn == 'http'){ %>
-                                                    <img style="width: 50%;" class="simple" src="<%= questions[i].question  %>" alt="img"> <br>
-                                                    <% }else{ %>
-                                                        <h6>
-                                                            <%= questions[i].question  %>
-                                                        </h6>
-                                                        <% } %>
+                                                    <% if(myqn == 'http'){ %>
+                                                        <img style="width: 70%;" class="simple" src="<%= questions[i].question  %>" alt="img"> <br>
+                                                        <% }else{ %>
+                                                            <h6>
+                                                                <%= questions[i].question  %>
+                                                            </h6>
+                                                            <% } %>
 
-                                                            <input type="radio" class="<%= naam %>" name="<%= naam %>" value="a">
-                                                            <label class="a"> <%= questions[i].a %> </label><br>
-                                                            <input type="radio" class="<%= naam %>" name="<%= naam %>" value="b">
-                                                            <label class="b"> <%= questions[i].b %>  </label><br>
-                                                            <input type="radio" class="<%= naam %>" name="<%= naam %>" value="c">
-                                                            <label class="c"> <%= questions[i].c %> </label><br>
-                                                            <div class="row">
-                                                                <div class="col-8">
-                                                                    <input type="radio" class="<%= naam %>" name="<%= naam %>" value="d">
-                                                                    <label class="d"> <%= questions[i].d %> </label><br>
+                                                                <input type="radio" class="<%= naam %>" name="<%= naam %>" value="a">
+                                                                <label class="a"> <%= questions[i].a %> </label><br>
+                                                                <input type="radio" class="<%= naam %>" name="<%= naam %>" value="b">
+                                                                <label class="b"> <%= questions[i].b %>  </label><br>
+                                                                <input type="radio" class="<%= naam %>" name="<%= naam %>" value="c">
+                                                                <label class="c"> <%= questions[i].c %> </label><br>
+                                                                <div class="row">
+                                                                    <div class="col-8">
+                                                                        <input type="radio" class="<%= naam %>" name="<%= naam %>" value="d">
+                                                                        <label class="d"> <%= questions[i].d %> </label><br>
+                                                                    </div>
+                                                                    <div class="col-4" style="text-align: right;">
+                                                                        <button id="b<%= i+1 %>" type="button" class="btn btn-dark">Explanation</button>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-4" style="text-align: right;">
-                                                                    <button id="b<%= i+1 %>" type="button" class="btn btn-dark">Explanation</button>
+
+                                                                <div id="a<%= i+1 %>" style="display: none;">
+                                                                    <img style="width: 70%;" class="simple" src="<%= questions[i].solution  %>" alt="solution">
                                                                 </div>
-                                                            </div>
 
-                                                            <div id="a<%= i+1 %>" style="display: none;">
-                                                                <img style="width: 50%;" class="simple" src="<%= questions[i].solution  %>" alt="solution">
-                                                            </div>
+                                        </div>
 
-                                    </div>
+                                        <!-- java script-->
 
-                                    <!-- java script-->
-
-                                    <script>
-                                        document.getElementById('b<%= i+1 %>').onclick = function() {
-                                            var x = document.getElementById('a<%= i+1 %>');
-                                            if (x.style.display === "none") {
-                                                x.style.display = 'block';
-                                            } else {
-                                                x.style.display = 'none';
+                                        <script>
+                                            document.getElementById('b<%= i+1 %>').onclick = function() {
+                                                var x = document.getElementById('a<%= i+1 %>');
+                                                if (x.style.display === "none") {
+                                                    x.style.display = 'block';
+                                                } else {
+                                                    x.style.display = 'none';
+                                                }
                                             }
-                                        }
 
-                                        $(document).ready(function() {
-                                            <%  var qnav = 's' + (i + 1); %>
-                                            if ('<%= questions[i].ans %>' == '<%= result[i] %>') {
-                                                pcount++;
-                                                ucount--;
-                                                document.getElementById('pcount').innerHTML = pcount;
-                                                document.getElementsByClassName('<%= result[i] %>')[<%= i %>].setAttribute("style", "background-color:#84fa84;");
-                                                document.getElementsByClassName('check')[<%= i %>].innerHTML = 'Correct';
-                                                document.getElementById('<%= qnav %>').setAttribute("style", "background-color:#84fa84");
-                                            } else if ('<%= result[i] %>' == 'null') {
-                                                document.getElementsByClassName('<%= questions[i].ans %>')[<%= i %>].setAttribute("style", "background-color:#84fa84;");
-                                                document.getElementsByClassName('check')[<%= i %>].innerHTML = 'Not Attempted';
-                                            } else {
-                                                ncount++;
-                                                ucount--
-                                                document.getElementById('ncount').innerHTML = ncount;
-                                                document.getElementsByClassName('<%= questions[i].ans %>')[<%= i %>].setAttribute("style", "background-color:#84fa84;");
-                                                document.getElementsByClassName('<%= result[i] %>')[<%= i %>].setAttribute("style", "background-color:	 #ff5b4d;");
-                                                document.getElementsByClassName('check')[<%= i %>].innerHTML = 'Wrong';
-                                                document.getElementById('<%= qnav %>').setAttribute("style", "background-color:	 #ff5b4d");
-                                            }
-                                            document.getElementById('ucount').innerHTML = ucount;
-                                        });
-                                    </script>
-
+                                            $(document).ready(function() {
+                                                <%  var qnav = 's' + (i + 1); %>
+                                                if ('<%= questions[i].ans %>' == '<%= result[i] %>') {
+                                                    pcount++;
+                                                    ucount--;
+                                                    document.getElementById('pcount').innerHTML = pcount;
+                                                    document.getElementsByClassName('<%= result[i] %>')[<%= i %>].setAttribute("style", "background-color:#84fa84;");
+                                                    document.getElementsByClassName('check')[<%= i %>].innerHTML = 'Correct';
+                                                    document.getElementById('<%= qnav %>').setAttribute("style", "background-color:#84fa84");
+                                                } else if ('<%= result[i] %>' == 'null') {
+                                                    document.getElementsByClassName('<%= questions[i].ans %>')[<%= i %>].setAttribute("style", "background-color:#84fa84;");
+                                                    document.getElementsByClassName('check')[<%= i %>].innerHTML = 'Not Attempted';
+                                                } else {
+                                                    ncount++;
+                                                    ucount--
+                                                    document.getElementById('ncount').innerHTML = ncount;
+                                                    document.getElementsByClassName('<%= questions[i].ans %>')[<%= i %>].setAttribute("style", "background-color:#84fa84;");
+                                                    document.getElementsByClassName('<%= result[i] %>')[<%= i %>].setAttribute("style", "background-color:	 #ff5b4d;");
+                                                    document.getElementsByClassName('check')[<%= i %>].innerHTML = 'Wrong';
+                                                    document.getElementById('<%= qnav %>').setAttribute("style", "background-color:	 #ff5b4d");
+                                                }
+                                                document.getElementById('ucount').innerHTML = ucount;
+                                            });
+                                        </script>
 
 
 
-                        </div>
-                        <% } %>
 
-                </form>
+                            </div>
+                            <% } %>
+
+                    </form>
+                </div>
+
+
+
+
+                <div style="text-align: right;">
+                    <button class="btn btn-default" style="margin-right: 10px;border: groove;" onclick="erase()">Clear</button>
+                    <button class="btn btn-warning" style="margin-right: 10px;" onclick="previous()">Previous</button>
+                    <button class="btn btn-success" style="margin-right: 10px;" onclick="next()">Next</button>
+                    <button class="btn btn-primary" style="margin-right: 10px;" onclick="color()">Mark & Next</button>
+                </div>
             </div>
 
 
-
-
-            <div style="text-align: right;">
-                <button class="btn btn-default" style="margin-right: 10px;border: groove;" onclick="erase()">Clear</button>
-                <button class="btn btn-warning" style="margin-right: 10px;" onclick="previous()">Previous</button>
-                <button class="btn btn-success" style="margin-right: 10px;" onclick="next()">Next</button>
-                <button class="btn btn-primary" style="margin-right: 10px;" onclick="color()">Mark & Next</button>
-            </div>
-        </div>
-
-
-        <div class="jumbotron col-md-4 col-12 " style="border: groove;">
-            <div style="padding: 20px;">
-                <%    for(var c=1;c <= no;c++){ %>
-                    <% var ids= 's'+c; %>
-                        <a href="#<%= c %>">
+            <div class="jumbotron col-md-4 col-12 " style="border: groove;">
+                <div style="padding: 20px;">
+                    <%    for(var c=1;c <= no;c++){ %>
+                        <% var ids= 's'+c; %>
+                            <a href="#<%= c %>">
                         <button class="quest_nav " id="<%= ids %>" name="key" value="<%= c %>" onclick="show_question(this.id)">
                 <p>
                     <%= c %>
                 </p>
             </button>
             </a>
-                        <%  } %>
+                            <%  } %>
+                </div>
             </div>
         </div>
-    </div>
 
 
 
 
-    <script>
-        var q = 1;
+        <script>
+            var q = 1;
 
-        function show() {
-            var x = document.getElementById(q);
-            //alert(q);
-            if (x.style.display === "none") {
-                x.style.display = "block";
-            } else {
-                x.style.display = "none";
-            }
-            color();
-        }
-        show();
-
-
-
-        //show question
-        function show_question(clicked_id) {
-            var key = document.getElementById(clicked_id).value;
-            show();
-            q = key;
-            show();
-        }
-
-
-        //previous
-        function previous() {
-            if (q > 1) {
-                show();
-                q = q - 1;
-                show();
-            }
-        }
-
-        //next
-        function next() {
-            if (q < <%= no %>) {
-                show();
-                //color();
-                q = parseInt(q) + 1;
-                show();
-            }
-        }
-
-        //clear
-        function erase() {
-            var myclass = "answer" + (q - 1);
-            var but = 's' + q;
-            var buttons = document.querySelectorAll('.' + myclass);
-            for (var i = 0; i < buttons.length; i++) {
-                buttons[i].checked = false;
-                //document.getElementById(but).style.backgroundColor = "white";
-            }
-        }
-
-        //color the button
-        function color() {
-            //not attempted
-            var mark;
-            var myclass = "answer" + (q - 1);
-            var buttons = document.querySelectorAll('.' + myclass);
-            for (var a = 0; a < buttons.length; a++) {
-
-                var ans = buttons[a].checked;
-                if (ans == true) {
-                    mark = 1;
-                    var but = 's' + q;
-                    document.getElementById(but).style.backgroundColor = "green";
-                    break;
+            function show() {
+                var x = document.getElementById(q);
+                //alert(q);
+                if (x.style.display === "none") {
+                    x.style.display = "block";
                 } else {
-                    mark = 0;
+                    x.style.display = "none";
+                }
+                color();
+            }
+            show();
+
+
+
+            //show question
+            function show_question(clicked_id) {
+                var key = document.getElementById(clicked_id).value;
+                show();
+                q = key;
+                show();
+            }
+
+
+            //previous
+            function previous() {
+                if (q > 1) {
+                    show();
+                    q = q - 1;
+                    show();
                 }
             }
-        }
-    </script>
+
+            //next
+            function next() {
+                if (q < <%= no %>) {
+                    show();
+                    //color();
+                    q = parseInt(q) + 1;
+                    show();
+                }
+            }
+
+            //clear
+            function erase() {
+                var myclass = "answer" + (q - 1);
+                var but = 's' + q;
+                var buttons = document.querySelectorAll('.' + myclass);
+                for (var i = 0; i < buttons.length; i++) {
+                    buttons[i].checked = false;
+                    //document.getElementById(but).style.backgroundColor = "white";
+                }
+            }
+
+            //color the button
+            function color() {
+                //not attempted
+                var mark;
+                var myclass = "answer" + (q - 1);
+                var buttons = document.querySelectorAll('.' + myclass);
+                for (var a = 0; a < buttons.length; a++) {
+
+                    var ans = buttons[a].checked;
+                    if (ans == true) {
+                        mark = 1;
+                        var but = 's' + q;
+                        document.getElementById(but).style.backgroundColor = "green";
+                        break;
+                    } else {
+                        mark = 0;
+                    }
+                }
+            }
+        </script>
 
 
 
-    <%- include('partials/footer') %>
+        <%- include('partials/footer') %>

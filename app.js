@@ -443,7 +443,7 @@ async function generatelink(fileid, type) {
             //console.log(result.data);
             var link = result.data.webViewLink;
         } else {
-            var link = "https://drive.google.com/thumbnail?id=" + fileid.toString();
+            var link = "https://drive.google.com/uc?id=" + fileid.toString();
         }
         //console.log(link);
         return link;
@@ -899,7 +899,7 @@ app.post('/my_create_image', uploadStorage.array('image', 2), async function(req
     if (!req.files) {
         //console.log("no file");
     } else {
-        console.log(req.files);
+        //console.log(req.files);
         if (req.files[0].originalname < req.files[1].originalname) {
             var question = req.files[0];
             var answer = req.files[1];
@@ -1432,11 +1432,11 @@ app.get("/delete_comment/:review_id/:user/:domain/:tsname", function(req, res) {
     res.redirect('/comments/' + req.params.tsname + "/" + req.params.domain);
 })
 
-// app.post("/test_series", function(req, res) {
-//     var ts_id = req.body.ts_id;
+app.post("/test_series", function(req, res) {
+    var ts_id = req.body.ts_id;
 
-//     res.redirect("/test_series/" + ts_id);
-// });
+    res.redirect("/test_series/" + ts_id);
+});
 
 app.post("/selected_test", function(req, res) {
     var test_series = req.body.test_series;
