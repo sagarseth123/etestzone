@@ -112,7 +112,7 @@
                                             <% var myqn =thisq.substr(0,4); %>
 
                                                 <% if(myqn == 'http'){ %>
-                                                    <img style="width: 70%;height: auto;" class="simple" src="<%= questions[i].question  %>" alt="img">
+                                                    <img style="width: 100%;height: auto;" class="simple" src="<%= questions[i].question  %>" alt="img">
 
                                                     <br>
                                                     <hr>
@@ -120,18 +120,18 @@
                                                         <% var naam= 'answer'+i; %>
                                                             <% var check = questions[i].a %>
                                                                 <% if(check.length < 5){ %>
-                                                                    <div style="display: flex;">
+                                                                    <div style="display: flex;width: 100%;">
                                                                         <input style="margin: 7px;" type="radio" class="<%= naam %>" name="<%= naam %>" value="a">
-                                                                        <label> <%= questions[i].a %> </label><br>
+                                                                        <label style="padding-right: 10%;"> <%= questions[i].a %> </label><br>
 
                                                                         <input style="margin: 7px;" type="radio" class="<%= naam %>" name="<%= naam %>" value="b">
-                                                                        <label> <%= questions[i].b %>  </label><br>
+                                                                        <label style="padding-right: 10%;"> <%= questions[i].b %>  </label><br>
 
                                                                         <input style="margin: 7px;" type="radio" class="<%= naam %>" name="<%= naam %>" value="c">
-                                                                        <label> <%= questions[i].c %> </label><br>
+                                                                        <label style="padding-right: 10%;"> <%= questions[i].c %> </label><br>
 
                                                                         <input style="margin: 7px;" type="radio" class="<%= naam %>" name="<%= naam %>" value="d">
-                                                                        <label> <%= questions[i].d %> </label><br>
+                                                                        <label style="padding-right: 10%;"> <%= questions[i].d %> </label><br>
                                                                     </div>
                                                                     <% }else{ %>
 
