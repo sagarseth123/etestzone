@@ -23,7 +23,6 @@
         "formidable": "^1.2.2",
         "googleapis": "^73.0.0",
         "gridfs-stream": "^1.1.1",
-        "helmet": "^4.6.0",
         "jsonwebtoken": "^8.5.1",
         "memorystore": "^1.6.2",
         "method-override": "^3.0.0",

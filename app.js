@@ -58,8 +58,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
 
-var helmet = require('helmet');
-app.use(helmet());
+// var helmet = require('helmet');
+// app.use(helmet());
 
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
@@ -387,11 +387,8 @@ app.get('/sitemap.xml/BingSiteAuth.xml', function(req, res) {
     res.sendFile('/BingSiteAuth.xml');
 });
 
-// app.use(function(req, res, next) {
-//     res.removeHeader("X-Powered-By");
-//     next();
-// });
-
+// Remove the X-Powered-By headers.
+app.disable('x-powered-by');
 
 //my drive image uploads begin here
 
