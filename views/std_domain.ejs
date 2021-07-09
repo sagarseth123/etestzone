@@ -7,6 +7,24 @@
     <body>
 
 
+
+        <style>
+            .payment-card {
+                z-index: 10;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                padding: 2%;
+                transform: translate(-50%, -50%);
+            }
+        </style>
+
+
+
+
+
+
+
         <div id='content-desktop'>
             <%- include('partials/bdheader') %>
 
@@ -14,7 +32,25 @@
 
 
 
+
+
+
+
+
+
+
                     <div style="padding-top: 12rem;margin-bottom: 0px;padding-bottom: 600px;" class="container">
+                        <div style="text-align: center;">
+                            <div id="desktop_payment" class="payment-card logo-title" style="display: none;background-image: url(/images/my_greenBoard.png); background-size: 100% 100%;background-repeat: no-repeat;overflow-wrap: break-word;">
+                                <span style="margin-left: 90%;"><button onclick="dp_close();" class="btn logo-title" style="font-size: 40px;font-weight: 800;">-</button> </span>
+                                <h3 style="margin-top: 0px;"> <span class="slide-title"> 200</span> rs Only/-</h3>
+                                <span>For One Year</span>
+                                <p style="overflow: auto; padding: 10px;">We are trying to give you best material in low cost as much as possile,but we need money to run our organisation so please donate us some money by unlocking the all feature of this websites.</p>
+                                <a href="/make_payment"> <button class="button primary large">Pay Now</button></a>
+                            </div>
+                        </div>
+
+
 
                         <% var length=test_series.length %>
                             <div style="text-align: center;" class="row centered">
@@ -25,53 +61,86 @@
 
 
                                         <div class="card zoom" style="width: 70%; box-shadow: 10px 10px 5px grey;">
-                                            <a href="/test_series/<%= test_series[i]._id %>" style="text-decoration: none;color: inherit;">
 
-                                                <button type="button" class="btn button primary large" style="padding: 0px;margin: 0px;">
-                                        <img class="card-img-top simple" style="width: 50%;height: 40%;margin-bottom: 12px;border-radius: 40px;" src="\images\<%= test_series[i].domain %>.png" alt="Card image cap">
-                                        <div  class="card-body" style="padding-top: 0px;padding-bottom: 0px;">
-                                            <h6 style="margin: 0px;font-weight: normal;font-size: 18px;width: 100%;">
-                                                <% var tname=test_series[i].tsname.toUpperCase(); %>
-                                                    <%= tname %>
-                                            </h6>
-                                            <p style="width: 100%;">
-                                                <%= test_series[i].total_test  %> Test
-                                                    <br> <%= test_series[i].rating %> Star Ratings
-                                                        <br>
-                                                        <a  href="/comments/<%= test_series[i].tsname %>/<%= test_series[i].domain %>" style="color: #719c51;">Reviews</a>
-                                                        
-                                          <br> By:
-                                                    <% var x= test_series[i].teacher; %> 
-                                                    <% var name = x.substring(0, x.length - 10); %> 
-                                                    <%= name %> 
-                                                </p>
-                                                
-                                        </div>
-                                        <% if(test_series[i].amount==0){ %> 
-                                            <% var price='free'; %> 
-                                        <% }else{ %>
-                                            <% var price= test_series[i].amount; %>  
-                                        <% } %> 
-                                        <div class="card-footer  text-white" style="padding-bottom: 0px;padding-top: 0px;height: 100%;background-color: #72664c;">
-                                            <h3 style="margin: 0px;padding: 10px;"><%= price %> /- </h3>
-                                        </div>
-                                        </button>
 
-                                            </a>
+                                            <!-- <button type="button" class="btn button primary large" style="padding: 0px;margin: 0px;"> -->
+                                            <div class="" style="padding: 0px;margin: 0px;">
+                                                <img class="card-img-top simple" style="width: 50%;height: 40%;margin-bottom: 12px;border-radius: 40px;" src="\images\<%= test_series[i].domain %>.png" alt="Card image cap">
+                                                <div class="card-body" style="padding-top: 0px;padding-bottom: 0px;">
+                                                    <h6 style="margin: 0px;font-weight: normal;font-size: 18px;width: 100%;">
+                                                        <% var tname=test_series[i].tsname.toUpperCase(); %>
+                                                            <%= tname %>
+                                                    </h6>
+                                                    <p style="width: 100%;">
+                                                        <%= test_series[i].total_test  %> Test
+                                                            <br>
+                                                            <%= test_series[i].rating %> Star Ratings
+                                                                <br>
+                                                                <a href="/comments/<%= test_series[i].tsname %>/<%= test_series[i].domain %>" style="color: #719c51;">Reviews</a>
+
+                                                                <br> By:
+                                                                <% var x= test_series[i].teacher; %>
+                                                                    <% var name = x.substring(0, x.length - 10); %>
+                                                                        <%= name %>
+                                                    </p>
+
+                                                </div>
+                                                <% if(test_series[i].amount==0){ %>
+
+                                                    <a href="/test_series/<%= test_series[i]._id %>" style="text-decoration: none;color: inherit;">
+                                                        <div class="card-footer  text-white" style="padding-bottom: 0px;padding-top: 0px;height: 100%;background-color: #72664c;">
+                                                            <h3 style="margin: 0px;padding: 10px;">
+                                                                Free!!! /- </h3>
+                                                        </div>
+                                                    </a>
+
+                                                    <% }else{ %>
+
+                                                        <% if(user.subscription > date){ %>
+                                                            <a href="/test_series/<%= test_series[i]._id %>" style="text-decoration: none;color: inherit;">
+                                                                <div class="card-footer  text-white" style="padding-bottom: 0px;padding-top: 0px;height: 100%;background-color: #72664c;">
+                                                                    <h3 style="margin: 0px;padding: 10px;">
+                                                                        Select </h3>
+                                                                </div>
+                                                            </a>
+                                                            <% }else{ %>
+
+                                                                <div class="card-footer  text-white" style="padding-bottom: 0px;padding-top: 0px;height: 100%;background-color: #72664c;">
+                                                                    <button onclick="payment();" class="btn card-footer  text-white" style="margin: 0px;">
+                                                                <h2 style="margin: 0px;font-weight: 600;">
+                                                                    Subscribe /- </h2>
+                                                                    </button>
+                                                                </div>
+                                                                <% } %>
+                                                                    <% } %>
+
+                                            </div>
+                                            <!-- </button> -->
+
+
                                         </div>
                                     </div>
                                     <% } %>
                             </div>
                     </div>
+                    <script>
+                        function payment() {
+                            var x = document.getElementById('desktop_payment').style;
+                            if (x.display == 'none') {
+                                x.display = 'block';
+                            }
+                        }
 
+                        function dp_close() {
+                            var x = document.getElementById('desktop_payment').style;
+                            if (x.display == 'block') {
+                                x.display = 'none';
+                            }
+                        }
+                    </script>
 
         </div>
         </div>
-
-
-
-
-
 
 
 
@@ -91,18 +160,36 @@
 
                 <div class="container" style="margin-top: 70px;">
 
+
+
+                    <div style="text-align: center;">
+                        <div id="mobile_payment" class="payment-card logo-title" style="display: none;background-image: url(/images/my_greenBoard.png); background-size: 100% 100%;background-repeat: no-repeat;overflow-wrap: break-word;width: 80%;">
+                            <span style="margin-left: 80%;"><button onclick="mp_close();" class="btn logo-title" style="font-size: 40px;font-weight: 800;">-</button> </span>
+                            <h3 style="margin-top: 0px;"> <span class="slide-title"> 200</span> rs Only/-</h3>
+                            <span>For One Year</span>
+                            <p style="overflow: auto; padding: 10px;">We are trying to give you best material in low cost as much as possile,but we need money to run our organisation so please donate us some money by unlocking all the feature of this websites.</p>
+                            <a href="/make_payment"> <button class="button primary large">Pay Now</button></a>
+                        </div>
+                    </div>
+
                     <% var length=test_series.length %>
                         <div style="text-align: center;" class="row centered">
+
+
+
+
+
+
                             <% for(var i=0;i< test_series.length;i++){ %>
                                 <div class="col-6 col-lg-4">
 
 
 
                                     <div class="card zoom" style="box-shadow: 10px 10px 5px grey;padding-bottom: 0px;padding-top: 0px;border-radius: 15px;">
-                                        <a href="/test_series/<%= test_series[i]._id %>" style="text-decoration: none;color: inherit;">
+                                        <!-- <a href="/test_series/<%= test_series[i]._id %>" style="text-decoration: none;color: inherit;"> -->
 
 
-                                            <button class="button primary large" style="padding: 0px;margin: 0px;border-radius: 15px;" type="button">
+                                        <button class="button primary large" style="padding: 0px;margin: 0px;" type="menu">
                                             <img class="card-img-top" style="width: 50%;height: 40%;margin-left: 0%;border-radius: 20px;" src="\images\<%= test_series[i].domain %>.png" alt="Card image cap">
                                             <div class="card-body" style="padding: 0px;margin: 0px;">
                                                 <h6 style="margin: 10px;">
@@ -121,21 +208,60 @@
                                                            <%= name %>
                                                 </p>
                                             </div>
-                                            <% if(test_series[i].amount==0){ %> 
-                                                <% var price='free'; %> 
-                                            <% }else{ %>
-                                                <% var price= test_series[i].amount; %>  
-                                            <% } %> 
-                                            <div class="card-footer text-white" style="padding: 0px;">
-                                                <h3 style="margin: 0px;padding: 10px;background-color: #72664c;"><%= price %> /- </h3>
-                                            </div>
-                                        </button>
-                                        </a>
+                                           <% if(test_series[i].amount==0){ %>
+
+                                                    <a href="/test_series/<%= test_series[i]._id %>" style="text-decoration: none;color: inherit;">
+                                                        <div class="card-footer text-white" style="padding: 0px;">
+                                                            <h3 style="margin: 0px;padding: 10px;background-color: #72664c;">
+                                                                Free!!! /- </h3>
+                                                        </div>
+                                                    </a>
+
+                                                    <% }else{ %>
+
+                                                        <% if(user.subscription > date){ %>
+                                                            <a href="/test_series/<%= test_series[i]._id %>" style="text-decoration: none;color: inherit;">
+                                                                <div class="card-footer text-white" style="padding: 0px;">
+                                                                    <h3 style="margin: 0px;padding: 10px;background-color: #72664c;">
+                                                                        Select </h3>
+                                                                </div>
+                                                            </a>
+                                                            <% }else{ %>
+
+                                                                <div class="card-footer text-white" style="padding: 0px;">
+                                                                    <button onclick="mob_payment();" class="btn card-footer  text-white" style="margin: 0px;padding: 0px;border: 0px;">
+                                                                <h2 style="margin: 0px;padding: 10px;background-color: #72664c;">
+                                                                    Subscribe  </h2>
+                                                                    </button>
                                     </div>
+                                    <% } %>
+                                        <% } %>
+                                            <!-- <div class="card-footer text-white" style="padding: 0px;">
+                                                <h3 style="margin: 0px;padding: 10px;background-color: #72664c;">
+                                                     price  /- </h3>
+                                            </div> -->
+                                            </button>
+                                            <!-- </a> -->
                                 </div>
-                                <% } %>
                         </div>
+                        <% } %>
                 </div>
+                <script>
+                    function mob_payment() {
+                        var x = document.getElementById('mobile_payment').style;
+                        if (x.display == 'none') {
+                            x.display = 'block';
+                        }
+                    }
+
+                    function mp_close() {
+                        var x = document.getElementById('mobile_payment').style;
+                        if (x.display == 'block') {
+                            x.display = 'none';
+                        }
+                    }
+                </script>
+        </div>
         </div>
 
 

@@ -4,7 +4,7 @@
 
 require('dotenv').config();
 const express = require("express");
-const bodyParser = require("body-parser");
+
 const mongoose = require('mongoose');
 const ejs = require("ejs");
 var session = require('express-session');
@@ -34,9 +34,6 @@ var jwt = require("jsonwebtoken");
 
 
 
-
-
-
 var count = [];
 for (var i = 0; i <= 100000; i++) {
     count.push(i);
@@ -53,6 +50,16 @@ var visit;
 
 
 const app = express();
+
+
+const checksum_lib = require('./appfiles/payment/Paytm/checksum');
+const payment = require('./appfiles/payment/index.js');
+app.use('/', payment);
+mongoose.set('useFindAndModify', false);
+const bodyParser = require("body-parser");
+
+
+
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -61,7 +68,9 @@ app.set('view engine', 'ejs');
 // var helmet = require('helmet');
 // app.use(helmet());
 
+
 var cookieParser = require('cookie-parser');
+const { response } = require('./appfiles/payment/index.js');
 app.use(cookieParser());
 
 app.use(session({
@@ -106,6 +115,12 @@ var userSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
+    notification: {
+        type: String,
+        enum: ['Yes', 'No'],
+        default: 'Yes'
+    },
+    subscription: String,
 });
 
 
@@ -216,6 +231,7 @@ passport.deserializeUser(function(id, done) {
         done(err, user);
     });
 });
+
 
 
 
@@ -1280,14 +1296,14 @@ app.get('/cbse', function(req, res) {
 //student user
 
 
-
+console.log(date());
 
 
 
 app.post("/std_signup", function(req, res) {
     const token = jwt.sign({ email: req.body.username }, process.env.SECRET);
 
-    User.register({ username: req.body.username, confirmationCode: token }, req.body.password, function(err, user) {
+    User.register({ username: req.body.username, confirmationCode: token, subscription: date() }, req.body.password, function(err, user) {
 
         if (err) {
             console.log(err);
@@ -1373,13 +1389,7 @@ app.get('/std_page', function(req, res) {
     });
 });
 
-app.get("/domain/:domain", function(req, res) {
-    Mytest.find({ domain: req.params.domain, notification: "no", completed: "yes" }, { test: 0 }, function(err, found) {
-        Review.find({ domain: req.params.domain }, function(err, review) {
-            res.render('std_domain', { test_series: found, review: review });
-        });
-    });
-});
+
 
 
 
@@ -1387,6 +1397,19 @@ app.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');
 });
+
+
+function plusOne(date) {
+    //date=date.toString();
+    var x = date.substring(0, 4);
+    x = parseInt(x);
+    x = x + 1;
+    x = x.toString();
+    console.log(x);
+    date = x + date.slice(4);
+    console.log(date);
+    return date;
+}
 
 
 //yha tk h student
@@ -1404,11 +1427,72 @@ function check_user(req, res, next) {
 
 app.use(check_user);
 
+app.get("/domain/:domain", function(req, res) {
+    Mytest.find({ domain: req.params.domain, notification: "no", completed: "yes" }, { test: 0 }, function(err, found) {
+        Review.find({ domain: req.params.domain }, function(err, review) {
+            res.render('std_domain', { test_series: found, review: review, user: req.user, date: date() });
+        });
+    });
+});
 
 
+app.get('/make_payment', function(req, res) {
+    if (!req.user) {
+        res.status(400).send('Unvalid User');
+    } else {
+        var params = {};
+        params['MID'] = process.env.M_ID;
+        params['WEBSITE'] = process.env.WEBSITE;
+        params['CHANNEL_ID'] = 'WEB';
+        params['INDUSTRY_TYPE_ID'] = 'Retail';
+        params['ORDER_ID'] = 'TEST_' + new Date().getTime();
+        params['CUST_ID'] = 'customer_001';
+        params['TXN_AMOUNT'] = '200';
+        params['CALLBACK_URL'] = 'http://localhost:3000/callback';
+        params['EMAIL'] = req.user.username;
+
+
+
+        checksum_lib.genchecksum(params, process.env.MK, function(err, checksum) {
+            var txn_url = "https://securegw-stage.paytm.in/theia/processTransaction"; // for staging
+            // var txn_url = "https://securegw.paytm.in/theia/processTransaction"; // for production
+
+            var form_fields = "";
+            for (var x in params) {
+                form_fields += "<input type='hidden' name='" + x + "' value='" + params[x] + "' >";
+            }
+            form_fields += "<input type='hidden' name='CHECKSUMHASH' value='" + checksum + "' >";
+
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.write('<html><head><title>Merchant Checkout Page</title></head><body><center><h1>Please do not refresh this page...</h1></center><form method="post" action="' + txn_url + '" name="f1">' + form_fields + '</form><script type="text/javascript">document.f1.submit();</script></body></html>');
+            res.end();
+        });
+    }
+});
+
+
+
+app.get('/payment_response/:response', function(req, res) {
+    console.log(req.params.response);
+    var _result = JSON.parse(req.params.response);
+    console.log("Status: ", _result.STATUS);
+    if (_result.STATUS == 'TXN_SUCCESS') {
+        var newdate = date();
+        newdate = plusOne(newdate);
+        console.log(newdate);
+        User.findOneAndUpdate({ username: req.user.username }, { $set: { "subscription": newdate } }, { new: true }, function(err, doc) {
+            if (err) {
+                res.send(err);
+            }
+        })
+    }
+    res.render('response', {
+        'data': _result
+    });
+});
 
 app.get("/comments/:tsname/:domain", function(req, res) {
-    //console.log(req.params.tsname);
+    //console.log(req.user);
     Review.findOne({ domain: req.params.domain, tsname: req.params.tsname }, function(err, review) {
         //console.log(review);
         var USER = req.user.username;
@@ -1772,6 +1856,7 @@ app.get('/teacher_create', function(req, res) {
 app.post('/qpaper', function(req, res) {
     var tname = req.body.test_name;
     //console.log(Name);
+    var USER = req.user.username;
     Test.findOne({ name: tname }, function(err, found) {
         var no = found.question.length;
         res.render('sample_test', { date: found.date, tmarks: found.tmarks, pmark: found.pmarks, nmark: found.nmarks, name: found.name, no: no, question: found.question, user: USER });
@@ -1875,14 +1960,14 @@ app.get("/test_series/:ts_id", function(req, res) {
                 test_name.push({ tname: found.test[i].tname, _id: found.test[i]._id });
             }
         }
-        if (found.amount == 0) {
-            var USER = req.user.username;
-            res.render('selected_ts', {
-                tests: test_name,
-                found: found,
-                user: USER
-            });
-        }
+
+        var USER = req.user.username;
+        res.render('selected_ts', {
+            tests: test_name,
+            found: found,
+            user: USER
+        });
+
     });
 });
 

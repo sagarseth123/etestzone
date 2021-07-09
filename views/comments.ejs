@@ -28,8 +28,9 @@
                                                     <%= name %> :
                                                         <%= comment.comment %>
                                                 </p>
-                                                <a href="/delete_comment/<%= review._id %>/<%= comment.user %>/<%= review.domain %>/<%= review.tsname %>" style="right: 20px;float: right;position: absolute;"><img src="/images/delete.png" width="30px" alt="delete"></a>
-
+                                                <% if(user == comment.user){ %>
+                                                    <a href="/delete_comment/<%= review._id %>/<%= comment.user %>/<%= review.domain %>/<%= review.tsname %>" style="right: 20px;float: right;position: absolute;"><img src="/images/delete.png" width="30px" alt="delete"></a>
+                                                    <% } %>
                                             </div>
 
 
