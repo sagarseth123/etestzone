@@ -55,7 +55,7 @@
                                             <div>
                                                 <a href="<%= book2[i].pdf  %>" style="width: 90%;">
                                                     <button class="button primary large" style="width: 90%;" type="submit">   
-                                                                <!-- <img style="border-radius:15px; box-shadow: 10px 10px 5px grey;width:100%;" src="<%= book1[i].image %>" alt="image"> -->
+                                                                <!-- <img style="border-radius:15px; box-shadow: 10px 10px 5px grey;width:100%;" src="<%= //book1[i].image %>" alt="image"> -->
                                                                     <%= book2[i].name %>   
                                                         </button>
                                                 </a>
@@ -78,8 +78,7 @@
 
                                                             <div>
                                                                 <a href="<%= book3[i].pdf  %>" style="width: 90%;">
-                                                                    <button class="button primary large" style="width: 90%;" type="submit">   
-                                                                                <!-- <img style="border-radius:15px; box-shadow: 10px 10px 5px grey;width:100%;" src="<%= book1[i].image %>" alt="image"> -->
+                                                                    <button class="button primary large" style="width: 90%;" type="submit">
                                                                                     <%= book3[i].name %>   
                                                                         </button>
                                                                 </a>
@@ -88,14 +87,30 @@
                                                                 <% } %>
 
 
+                                                                    <% if(book4.length!=0){ %>
+                                                                        <h1 style="margin-top: 5rem;text-align: center; ">BOOK 4</h1>
 
-                                                                    <% if(paper.length !=0){ %>
-                                                                        <h1 style="margin-top: 5rem;text-align: center; ">Previous Year Paper</h1>
-                                                                        <div class="row">
-                                                                            <% for(var i=0;i<paper.length;i++){ %>
-                                                                                <div class="col-md-4">
-                                                                                    <a href="<%= paper[i].pdf %> ">
-                                                                                        <button class="btn" type="submit">
+                                                                        <% for(var i=0;i<book4.length;i++){ %>
+
+                                                                            <div>
+                                                                                <a href="<%= book4[i].pdf  %>" style="width: 90%;">
+                                                                                    <button class="button primary large" style="width: 90%;" type="submit">
+                                                                                                <%= book4[i].name %>   
+                                                                                    </button>
+                                                                                </a>
+                                                                            </div>
+                                                                            <% } %>
+                                                                                <% } %>
+
+
+
+                                                                                    <% if(paper.length !=0){ %>
+                                                                                        <h1 style="margin-top: 5rem;text-align: center; ">Previous Year Paper</h1>
+                                                                                        <div class="row">
+                                                                                            <% for(var i=0;i<paper.length;i++){ %>
+                                                                                                <div class="col-md-4">
+                                                                                                    <a href="<%= paper[i].pdf %> ">
+                                                                                                        <button class="btn" type="submit">
                                             <div style="width: 205px;">
                                                 <div style="padding: 0px;  margin: 0px;" class="card card-body">
                                                     <img style="border-radius: 15px; width: 100%;height: 80px;box-shadow: 10px 10px 5px grey;" src="<%= book3[i].image %>" alt="image">
@@ -107,25 +122,25 @@
                                                 </div> -->
                                             </div>
                                             </button>
-                                                                                    </a>
-                                                                                </div>
-                                                                                <% } %>
-                                                                        </div>
-                                                                        <hr>
-                                                                        <% } %>
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                                <% } %>
+                                                                                        </div>
+                                                                                        <hr>
+                                                                                        <% } %>
 
 
 
 
 
 
-                                                                            <% if(books.length !=0){ %>
-                                                                                <h1 style="margin-top: 5rem;text-align: center; ">Previous Year Paper</h1>
-                                                                                <div class="row">
-                                                                                    <% for(var i=0;i<books.length;i++){ %>
-                                                                                        <div class="col-md-4">
-                                                                                            <a href="<%= books[i].pdf %> ">
-                                                                                                <button class="btn" type="submit">
+                                                                                            <% if(books.length !=0){ %>
+                                                                                                <h1 style="margin-top: 5rem;text-align: center; ">Previous Year Paper</h1>
+                                                                                                <div class="row">
+                                                                                                    <% for(var i=0;i<books.length;i++){ %>
+                                                                                                        <div class="col-md-4">
+                                                                                                            <a href="<%= books[i].pdf %> ">
+                                                                                                                <button class="btn" type="submit">
                                                 <div style="width: 205px;">
                                                     <div style="padding: 0px;  margin: 0px;" class="card card-body">
                                                         <img style="border-radius: 15px; width: 100%;height: 80px;box-shadow: 10px 10px 5px grey;" src="<%= books[i].image %>" alt="image">
@@ -137,12 +152,12 @@
                                                     </div> -->
                                                 </div>
                                                 </button>
-                                                                                            </a>
-                                                                                        </div>
-                                                                                        <% } %>
-                                                                                </div>
-                                                                                <hr>
-                                                                                <% } %>
+                                                                                                            </a>
+                                                                                                        </div>
+                                                                                                        <% } %>
+                                                                                                </div>
+                                                                                                <hr>
+                                                                                                <% } %>
 
 
 
@@ -151,13 +166,13 @@
 
 
 
-                                                                                    <% if(notes.length !=0){ %>
-                                                                                        <h1 style="margin-top: 5rem;text-align: center; ">Notes</h1>
-                                                                                        <div class="row">
-                                                                                            <% for(var i=0;i<notes.length;i++){ %>
-                                                                                                <div class="col-md-4">
-                                                                                                    <a href="<%= notes[i].pdf %>">
-                                                                                                        <button class="btn" type="submit">
+                                                                                                    <% if(notes.length !=0){ %>
+                                                                                                        <h1 style="margin-top: 5rem;text-align: center; ">Notes</h1>
+                                                                                                        <div class="row">
+                                                                                                            <% for(var i=0;i<notes.length;i++){ %>
+                                                                                                                <div class="col-md-4">
+                                                                                                                    <a href="<%= notes[i].pdf %>">
+                                                                                                                        <button class="btn" type="submit">
                                 <div style="width: 205px;">
                                     <div style="padding: 0px;  margin: 0px;" class="card card-body">
                                         <img style="border-radius: 15px; width: 100%;height: 80px;box-shadow: 10px 10px 5px grey;" src="<%= notes[i].image %>" alt="image">
@@ -169,12 +184,12 @@
                                     </div> -->
                                 </div>
                                 </button>
-                                                                                                    </a>
-                                                                                                </div>
-                                                                                                <% } %>
-                                                                                        </div>
-                                                                                        <hr>
-                                                                                        <% } %>
+                                                                                                                    </a>
+                                                                                                                </div>
+                                                                                                                <% } %>
+                                                                                                        </div>
+                                                                                                        <hr>
+                                                                                                        <% } %>
 
 
                 </div>
@@ -274,47 +289,37 @@
 
 
 
-                                                <% if(paper.length !=0){ %>
-                                                    <h1 style="margin-top: 5rem;text-align: center; ">Previous Year Paper</h1>
+
+                                                <% if(book4.length!=0){ %>
+                                                    <h1 style="margin-top: 5rem;text-align: center; ">BOOK 4</h1>
                                                     <div class="row">
-                                                        <% for(var i=0;i<paper.length;i++){ %>
+                                                        <% for(var i=0;i<book4.length;i++){ %>
                                                             <div style="margin-top: 2rem;border-radius: 15px;" class="col-md-4">
-                                                                <a href="<%= paper[i].pdf  %> ">
+                                                                <a href="<%= book4[i].pdf  %> ">
                                                                     <button class="button primary large" style="width: 250px;" type="submit">                                                                                                                      
-                                                                      <div  style="padding: 0px;margin: 0px; text-align: center;">                                     
-                                                                    <%= paper[i].name %>                                                                         
-                                                            </div>                                    
-                                                                </button>
+                                                                  <div  style="padding: 0px;margin: 0px; text-align: center;">                                     
+                                                                <%= book4[i].name %>                                                                         
+                                                        </div>                                    
+                                                            </button>
                                                                 </a>
                                                             </div>
                                                             <% } %>
                                                     </div>
-                                                    <hr>
                                                     <% } %>
 
 
 
-
-
-
-                                                        <% if(books.length !=0){ %>
+                                                        <% if(paper.length !=0){ %>
                                                             <h1 style="margin-top: 5rem;text-align: center; ">Previous Year Paper</h1>
                                                             <div class="row">
-                                                                <% for(var i=0;i<books.length;i++){ %>
-                                                                    <div class="col-md-4">
-                                                                        <a href="<%= books[i].pdf %> ">
-                                                                            <button class="btn" type="submit">
-                                                        <div style="width: 105px;">
-                                                            <div style="border-radius: 15px; padding: 0px; width: 200px; margin: 0px;" class="card card-body">
-                                                                <img style="border-radius:15px; box-shadow: 10px 10px 5px grey;width:100%;" src="<%= books[i].image %>" alt="image">
-                                                            </div>
-                                                            <!-- <div style="padding: 0px;margin: 0px; text-align: center;height: 30px;">
-                                                                <p>
-                                                                    <%=// books[i].name %>
-                                                                </p>
-                                                            </div> -->
-                                                        </div>
-                                                        </button>
+                                                                <% for(var i=0;i<paper.length;i++){ %>
+                                                                    <div style="margin-top: 2rem;border-radius: 15px;" class="col-md-4">
+                                                                        <a href="<%= paper[i].pdf  %> ">
+                                                                            <button class="button primary large" style="width: 250px;" type="submit">                                                                                                                      
+                                                                      <div  style="padding: 0px;margin: 0px; text-align: center;">                                     
+                                                                    <%= paper[i].name %>                                                                         
+                                                            </div>                                    
+                                                                </button>
                                                                         </a>
                                                                     </div>
                                                                     <% } %>
@@ -327,15 +332,45 @@
 
 
 
-
-
-                                                                <% if(notes.length !=0){ %>
-                                                                    <h1 style="margin-top: 5rem;text-align: center; ">Notes</h1>
+                                                                <% if(books.length !=0){ %>
+                                                                    <h1 style="margin-top: 5rem;text-align: center; ">Previous Year Paper</h1>
                                                                     <div class="row">
-                                                                        <% for(var i=0;i<notes.length;i++){ %>
+                                                                        <% for(var i=0;i<books.length;i++){ %>
                                                                             <div class="col-md-4">
-                                                                                <a href="<%= notes[i].pdf %> ">
+                                                                                <a href="<%= books[i].pdf %> ">
                                                                                     <button class="btn" type="submit">
+                                                        <div style="width: 105px;">
+                                                            <div style="border-radius: 15px; padding: 0px; width: 200px; margin: 0px;" class="card card-body">
+                                                                <img style="border-radius:15px; box-shadow: 10px 10px 5px grey;width:100%;" src="<%= books[i].image %>" alt="image">
+                                                            </div>
+                                                            <!-- <div style="padding: 0px;margin: 0px; text-align: center;height: 30px;">
+                                                                <p>
+                                                                    <%=// books[i].name %>
+                                                                </p>
+                                                            </div> -->
+                                                        </div>
+                                                        </button>
+                                                                                </a>
+                                                                            </div>
+                                                                            <% } %>
+                                                                    </div>
+                                                                    <hr>
+                                                                    <% } %>
+
+
+
+
+
+
+
+
+                                                                        <% if(notes.length !=0){ %>
+                                                                            <h1 style="margin-top: 5rem;text-align: center; ">Notes</h1>
+                                                                            <div class="row">
+                                                                                <% for(var i=0;i<notes.length;i++){ %>
+                                                                                    <div class="col-md-4">
+                                                                                        <a href="<%= notes[i].pdf %> ">
+                                                                                            <button class="btn" type="submit">
                                         <div style="width: 105px;">
                                             <div style="border-radius: 15px; padding: 0px; width: 200px; margin: 0px;" class="card card-body">
                                                 <img style="border-radius:15px; box-shadow: 10px 10px 5px grey;width:100%;" src="<%= notes[i].image %>" alt="image">
@@ -347,12 +382,12 @@
                                             </div> -->
                                         </div>
                                         </button>
-                                                                                </a>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                    <% } %>
                                                                             </div>
+                                                                            <hr>
                                                                             <% } %>
-                                                                    </div>
-                                                                    <hr>
-                                                                    <% } %>
 
                     </div>
 

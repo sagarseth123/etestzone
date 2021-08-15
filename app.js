@@ -1220,6 +1220,8 @@ app.get("/cbse/:std_class/:subject", function(req, res) {
     var book2 = [];
     var book3 = [];
     var book3pdf = [];
+    var book4 = [];
+    var book4pdf = [];
     var paper = [];
     var paperpdf = [];
     var books = [];
@@ -1245,6 +1247,12 @@ app.get("/cbse/:std_class/:subject", function(req, res) {
                 book3.push(found[i]);
 
             }
+
+            if (found[i].division.match(/.*book4.*/)) {
+                book4.push(found[i]);
+
+            }
+
             if (found[i].division.match(/.*paper.*/)) {
                 paper.push(found[i]);
 
@@ -1268,6 +1276,8 @@ app.get("/cbse/:std_class/:subject", function(req, res) {
             book2pdf: book2pdf,
             book3: book3,
             book3pdf: book3pdf,
+            book4: book4,
+            book4pdf: book4pdf,
             paper: paper,
             paperpdf: paperpdf,
             books: books,
