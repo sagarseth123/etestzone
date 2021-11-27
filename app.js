@@ -20,6 +20,7 @@ const GridFsStorage = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 const fs = require('fs');
+const request=require('request');
 
 
 const date = require(__dirname + "/appfiles/date.js");
@@ -71,6 +72,7 @@ app.set('view engine', 'ejs');
 
 var cookieParser = require('cookie-parser');
 const { response } = require('./appfiles/payment/index.js');
+const { url } = require('inspector');
 app.use(cookieParser());
 
 app.use(session({
@@ -363,6 +365,7 @@ app.post('/reset_myAccount_password', function(req, res) {
 
 var g = 0;
 app.get("/", function(req, res) {
+    //console.log("first");
     res.render("index", { g: g });
     g = 0;
 });
@@ -2434,6 +2437,10 @@ app.post('/tresult', function(req, res) {
 });
 
 
+function awakefun(){
+    request("http://localhost:3000");
+    //console.log("call");
+}
 
 let port = process.env.PORT;
 if (port == null || port == "") {
@@ -2441,6 +2448,7 @@ if (port == null || port == "") {
 }
 app.listen(port, function(err) {
     console.log("the server is running on port 3000");
+    setInterval(awakefun,1000*60*2);
 });
 
 //app.listen(3000, function(req, res) {
